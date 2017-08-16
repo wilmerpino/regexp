@@ -1,0 +1,43 @@
+<md-toolbar color="primary">
+  <img src="../../assets/img/delicious.png">
+    <span class="mat-h1">Registro de Expedientes</span>
+    <span class="toolbar-spacer"></span>
+    <a md-icon-button routerLink="/login" routerLinkActive="active"><md-icon >person</md-icon></a>
+</md-toolbar>
+<md-toolbar color="warn">
+<a md-icon-button routerLink="/" routerLinkActive="active"><md-icon >home</md-icon></a>
+  <button md-button [mdMenuTriggerFor]="menuAdmin">
+    Administración
+  </button>
+  <md-menu #menuAdmin="mdMenu" yPosition="above">
+    <button md-menu-item routerLink="/clientes" routerLinkActive="active">
+      <md-icon>people</md-icon>
+      <span>Clientes</span>
+    </button>
+    <button md-menu-item routerLink="/instituciones" routerLinkActive="active">
+      <md-icon>account_balance</md-icon>
+      <span>Instituciones</span>
+    </button>
+    <button md-menu-item routerLink="/expedientes" routerLinkActive="active">
+      <md-icon>assignment</md-icon>
+      <span>Expedientes</span>
+    </button>
+    <button md-menu-item routerLink="/usuarios" routerLinkActive="active">
+      <md-icon>person</md-icon>
+      <span>Usuarios</span>
+    </button>
+  </md-menu>
+  <button md-button [mdMenuTriggerFor]="menuSeg">
+    Seguimientos
+  </button>
+  <md-menu #menuSeg="mdMenu">
+    <button md-menu-item routerLink="/seguimientos" routerLinkActive="active">
+      <md-icon>gavel</md-icon>
+      <span>Expedientes</span>
+    </button>
+    <button md-menu-item routerLink="/reportes" routerLinkActive="active">
+      <md-icon>print</md-icon>
+      <span>Reportes</span>
+    </button>
+  </md-menu>
+</md-toolbar>

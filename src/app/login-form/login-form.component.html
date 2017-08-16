@@ -1,0 +1,21 @@
+<div class="login-div">
+	<md-card class="login-card" >
+	    <md-card-header>
+	        <h2 class="mat-h2">{{ title }}</h2>
+	    </md-card-header>
+	    <md-card-content>
+		    <form (ngSubmit)="loginSubmit()" #loginForm="ngForm">
+		        <md-input-container>
+		            <input [(ngModel)]="myUsuario.login" name="login" mdInput placeholder="Nombre de Usuario" value="" required>
+		        </md-input-container>
+		        <md-input-container>
+		          <input [(ngModel)]="myUsuario.passwd" name="passwd" mdInput placeholder="Contrase&ntilde;a" value="" required>
+		        </md-input-container>
+	        </form>
+	    </md-card-content>
+	    <md-card-actions>
+	        <button type="submit" md-button (click)="loginSubmit()">Iniciar</button>
+	        <button md-button (click)="loginCancel()">Cancelar</button>
+	    </md-card-actions>
+	</md-card>
+</div>

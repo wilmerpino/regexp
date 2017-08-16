@@ -1,0 +1,23 @@
+.footer-toolbar{
+	position: fixed;
+	display: block;
+	right: 0;
+	bottom: 0;	
+	font-size: 1em;
+  	font-weight: normal;	
+}
+
+.footer-spacer {
+  flex: 1 1 auto;
+}
+
+ul > li{
+	list-style: none outside none;
+	display: inline;
+  	vertical-align: middle;
+}
+
+a{
+	text-decoration: none;
+	color: white;
+}
