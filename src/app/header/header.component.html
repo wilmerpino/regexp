@@ -1,43 +1,36 @@
-<md-toolbar color="primary">
-  <img src="../../assets/img/delicious.png">
-    <span class="mat-h1">Registro de Expedientes</span>
-    <span class="toolbar-spacer"></span>
-    <a md-icon-button routerLink="/login" routerLinkActive="active"><md-icon >person</md-icon></a>
-</md-toolbar>
-<md-toolbar color="warn">
-<a md-icon-button routerLink="/" routerLinkActive="active"><md-icon >home</md-icon></a>
-  <button md-button [mdMenuTriggerFor]="menuAdmin">
-    Administración
-  </button>
-  <md-menu #menuAdmin="mdMenu" yPosition="above">
-    <button md-menu-item routerLink="/clientes" routerLinkActive="active">
-      <md-icon>people</md-icon>
-      <span>Clientes</span>
-    </button>
-    <button md-menu-item routerLink="/instituciones" routerLinkActive="active">
-      <md-icon>account_balance</md-icon>
-      <span>Instituciones</span>
-    </button>
-    <button md-menu-item routerLink="/expedientes" routerLinkActive="active">
-      <md-icon>assignment</md-icon>
-      <span>Expedientes</span>
-    </button>
-    <button md-menu-item routerLink="/usuarios" routerLinkActive="active">
-      <md-icon>person</md-icon>
-      <span>Usuarios</span>
-    </button>
-  </md-menu>
-  <button md-button [mdMenuTriggerFor]="menuSeg">
-    Seguimientos
-  </button>
-  <md-menu #menuSeg="mdMenu">
-    <button md-menu-item routerLink="/seguimientos" routerLinkActive="active">
-      <md-icon>gavel</md-icon>
-      <span>Expedientes</span>
-    </button>
-    <button md-menu-item routerLink="/reportes" routerLinkActive="active">
-      <md-icon>print</md-icon>
-      <span>Reportes</span>
-    </button>
-  </md-menu>
-</md-toolbar>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><img alt="Brand" src="../../assets/img/logo.png"></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Hola <span class="sr-only">(current)</span></a></li>
+        <li><a routerLink="/clientes" routerLinkActive="active">Clientes</a></li>
+        <li><a routerLink="/instituciones" routerLinkActive="active">Instituciones</a></li>
+        <li><a routerLink="/expedientes" routerLinkActive="active">Expedientes</a></li>
+        <li><a routerLink="/usuarios" routerLinkActive="active">Usuarios</a></li>
+        <li><a routerLink="/seguimientos" routerLinkActive="active">Seguimientos</a></li>
+        <li><a routerLink="/reportes" routerLinkActive="active">Reportes</a></li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Buscar</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

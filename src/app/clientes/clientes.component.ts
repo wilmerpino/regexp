@@ -1,13 +1,12 @@
 import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
-import {DataSource} from '@angular/cdk';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
+import {HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { PaginationComponent } from '../pagination/pagination.component'
+//import { ModalService } from '../modal/modal.services';
+
+interface ClientesResponse {
+	  cliente: any;
+	  success: boolean;
+	}
 
 @Component({
   selector: 'app-clientes',
@@ -15,103 +14,69 @@ import 'rxjs/add/observable/fromEvent';
   styles: []
 })
 
+
 export class ClientesComponent implements OnInit {
-  displayedColumns = ['userId', 'userName', 'progress', 'color'];
-  exampleDatabase = new ExampleDatabase();
-  dataSource: ExampleDataSource | null;
 
-  @ViewChild('filter') filter: ElementRef;
+	clientes:any[];
+  page: number = 1;
+  total: number = 0;
+  limit:number = 10;
+  loading:boolean = true;
+  pagesToShow:number=10;
+  url:string = 'http://local.api.regexp.com/clientes';
+  url_next:string;
+  url_prev:string;
 
-  ngOnInit() {
-    this.dataSource = new ExampleDataSource(this.exampleDatabase);
-    Observable.fromEvent(this.filter.nativeElement, 'keyup')
-        .debounceTime(150)
-        .distinctUntilChanged()
-        .subscribe(() => {
-          if (!this.dataSource) { return; }
-          this.dataSource.filter = this.filter.nativeElement.value;
-        });
-  }
-}
+	constructor(private http: HttpClient/*, private modalService: ModalService*/){
 
-/** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
+	}
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
 
-/** An example database that the data source uses to retrieve data for the table. */
-export class ExampleDatabase {
-  /** Stream that emits whenever the data has been modified. */
-  dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
-  get data(): UserData[] { return this.dataChange.value; }
+  	ngOnInit() {
+        this.getClientes(this.url);
+    } 	
 
-  constructor() {
-    // Fill up the database with 100 users.
-    for (let i = 0; i < 100; i++) { this.addUser(); }
-  }
+    getClientes(url: string): void{ 
+      this.loading = true;
+      this.http.get(url)
+       .subscribe(
+        // Successful responses call the first callback.
+        data => {
+          this.clientes = data['data'];
+          this.total = data['total'];
+          this.url_next = data['next_page_url'];
+          this.url_prev = data['prev_page_url'];
+          this.url = data['path'];
+          console.log(this.url_prev);
+        },
+        // Errors will call this callback instead:
+        err => {
+            console.log('Something went wrong!');
+        })
+        // Read the result field from the JSON response.
+        this.loading = false;
+    }  
 
-  /** Adds a new user to the database. */
-  addUser() {
-    const copiedData = this.data.slice();
-    copiedData.push(this.createNewUser());
-    this.dataChange.next(copiedData);
-  }
+    goToPage(n){
+      this.page = n;
+      this.getClientes(this.url+'?page='+n);
+    }
 
-  /** Builds and returns a new User. */
-  private createNewUser() {
-    const name =
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+    onNext(): void {
+      this.page++;
+      this.getClientes(this.url_next);
+    }
 
-    return {
-      id: (this.data.length + 1).toString(),
-      name: name,
-      progress: Math.round(Math.random() * 100).toString(),
-      color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-    };
-  }
-}
+    onPrev(): void {
+      this.page--;
+      this.getClientes(this.url_prev);
+    }
 
-/**
- * Data source to provide what data should be rendered in the table. Note that the data source
- * can retrieve its data in any way. In this case, the data source is provided a reference
- * to a common data base, ExampleDatabase. It is not the data source's responsibility to manage
- * the underlying data. Instead, it only needs to take the data and send the table exactly what
- * should be rendered.
- */
-export class ExampleDataSource extends DataSource<any> {
-  _filterChange = new BehaviorSubject('');
-  get filter(): string { return this._filterChange.value; }
-  set filter(filter: string) { this._filterChange.next(filter); }
+    /* openModal(id: string){
+        this.modalService.open(id);
+    }
 
-  constructor(private _exampleDatabase: ExampleDatabase) {
-    super();
-  }
-
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<UserData[]> {
-    const displayDataChanges = [
-      this._exampleDatabase.dataChange,
-      this._filterChange,
-    ];
-
-    return Observable.merge(...displayDataChanges).map(() => {
-      return this._exampleDatabase.data.slice().filter((item: UserData) => {
-        let searchStr = (item.name + item.color).toLowerCase();
-        return searchStr.indexOf(this.filter.toLowerCase()) != -1;
-      });
-    });
-  }
-
-  disconnect() {}
-
+    closeModal(id: string){
+        this.modalService.close(id);
+    }*/
 }

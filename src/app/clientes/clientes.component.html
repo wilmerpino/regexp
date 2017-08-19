@@ -1,42 +1,45 @@
-<div class="example-container mat-elevation-z8">
-  <div class="example-header">
-    <md-input-container floatPlaceholder="never">
-      <input mdInput #filter placeholder="Filter users">
-    </md-input-container>
-  </div>
+<h1>{{ title }}</h1>
+<table class="table">
+	<thead>
+		<tr>
+			<td>Id</td>
+			<td>RIF</td>
+			<td>Nombre</td>
+			<td>Telefono</td>
+			<td>Correo</td>
+			<td>Acciones</td>
+		</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor = "let cliente of clientes">
+		<td>{{ cliente.id }}</td>
+		<td>{{ cliente.rif }}</td>
+		<td>{{ cliente.razon_social }}</td>
+		<td>{{ cliente.telefono }}</td>
+		<td>{{ cliente.email }}</td>
+		<td><button class="btn btn-default">Open </button> </td>
+	</tr>	
+	</tbody>
+</table>
 
-  <md-table #table [dataSource]="dataSource">
+<app-pagination
+  (goPage)="goToPage($event)"
+  (goNext)="onNext()"
+  (goPrev)="onPrev()"
+  [pagesToShow]="pagesToShow"
+  [page]="page"
+  [perPage]="limit"
+  [count]="total"></app-pagination>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- ID Column -->
-    <ng-container cdkColumnDef="userId">
-      <md-header-cell *cdkHeaderCellDef> ID </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.id}} </md-cell>
-    </ng-container>
-
-    <!-- Progress Column -->
-    <ng-container cdkColumnDef="progress">
-      <md-header-cell *cdkHeaderCellDef> Progress </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.progress}}% </md-cell>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container cdkColumnDef="userName">
-      <md-header-cell *cdkHeaderCellDef> Name </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
-    </ng-container>
-
-    <!-- Color Column -->
-    <ng-container cdkColumnDef="color">
-      <md-header-cell *cdkHeaderCellDef> Color </md-header-cell>
-      <md-cell *cdkCellDef="let row" [style.color]="row.color"> {{row.color}} </md-cell>
-    </ng-container>
-
-    <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
-  </md-table>
-</div>
-
-
+<!--<modal id="clientes-modal">
+    <div class="modal">
+        <div class="modal-body">
+            <h1>A Custom Modal!</h1>
+            <p>
+                Home page text: <input type="text" [(ngModel)]="bodyText" />
+            </p>
+            <button (click)="closeModal('clientes-modal');">Close</button>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>-->

@@ -1,23 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgModule } from '@angular/cdk';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import {DataSource} from '@angular/cdk';
-//import { Http, Headers} from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdButtonModule, MdCheckboxModule} from '@angular/material';
-import {MdInputModule, MdCardModule} from '@angular/material';
-import {MdSidenavModule, MdIconModule} from '@angular/material';
-import {MdToolbarModule, MdMenuModule} from '@angular/material';
-import {MdGridListModule} from '@angular/material';
-import {MdTabsModule} from '@angular/material';
-
-import { FlexLayoutModule } from "@angular/flex-layout";
 //import {AuthHttp, AuthConfig, tokenNotExpired, JwtHelper} from 'angular-jwt';
 
+//Componentes de la app
 import { AppComponent } from './app.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ExpedientesClientesComponent } from './expedientes-clientes/expedientes-clientes.component';
@@ -31,7 +21,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SeguimientosComponent } from './seguimientos/seguimientos.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ExpedientesComponent } from './expedientes/expedientes.component'
+import { ExpedientesComponent } from './expedientes/expedientes.component';
+import { PaginationComponent } from './pagination/pagination.component'
 
 const appRoutes: Routes = [
     { 
@@ -98,27 +89,13 @@ const appRoutes: Routes = [
     UsuariosComponent,
     SeguimientosComponent,
     ReportesComponent,
-    ExpedientesComponent
+    ExpedientesComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
-    MdButtonModule, 
-    MdCheckboxModule,
-    MdInputModule,
-    MdSidenavModule, 
-    MdToolbarModule,
-    MdMenuModule,
-    MdIconModule,
-    MdCardModule,
-    MdGridListModule,
-    FlexLayoutModule,
-    MdTabsModule,
-    DataSource,
-    /*Http, 
-    Headers,*/
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
@@ -129,8 +106,5 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 
-
-
 export class AppModule { }
 
-export class PizzaPartyAppModule { }

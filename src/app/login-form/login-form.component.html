@@ -1,21 +1,28 @@
-<div class="login-div">
-	<md-card class="login-card" >
-	    <md-card-header>
-	        <h2 class="mat-h2">{{ title }}</h2>
-	    </md-card-header>
-	    <md-card-content>
-		    <form (ngSubmit)="loginSubmit()" #loginForm="ngForm">
-		        <md-input-container>
-		            <input [(ngModel)]="myUsuario.login" name="login" mdInput placeholder="Nombre de Usuario" value="" required>
-		        </md-input-container>
-		        <md-input-container>
-		          <input [(ngModel)]="myUsuario.passwd" name="passwd" mdInput placeholder="Contrase&ntilde;a" value="" required>
-		        </md-input-container>
-	        </form>
-	    </md-card-content>
-	    <md-card-actions>
-	        <button type="submit" md-button (click)="loginSubmit()">Iniciar</button>
-	        <button md-button (click)="loginCancel()">Cancelar</button>
-	    </md-card-actions>
-	</md-card>
+
+<div class="col-lg-4 col-lg-offset-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Inicio de Sesi&oacute;n</h3>
+    </div>
+    <div class="panel-body">
+		<form (ngSubmit)="loginSubmit()" #loginForm="ngForm" class="form-horizontal">
+			<div class="form-group">
+    			<div class="col-lg-10 col-lg-offset-1">
+        			<input class="form-control" [(ngModel)]="myUsuario.login" name="login" mdInput placeholder="Nombre de Usuario" value="" required>
+    			</div>
+    		</div>	
+ 			<div class="form-group">
+    			<div class="col-lg-10 col-lg-offset-1">
+      				<input class="form-control" type="password" [(ngModel)]="myUsuario.passwd" name="passwd" mdInput placeholder="Contrase&ntilde;a" value="" required>
+    			</div>
+ 			</div>   
+		</form>      
+    </div>
+    <dir class="panel-footer">
+		<button type="submit" class="btn btn-primary" (click)="loginSubmit()">Iniciar</button>
+		<button type="button" class="btn btn-default" (click)="loginCancel()">Cancelar</button>
+    </dir>
+  </div>
 </div>
+
+	    

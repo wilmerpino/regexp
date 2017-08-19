@@ -1,0 +1,27 @@
+<!-- pagination.component.html -->
+<div class="pagination" *ngIf="count > 0">
+	<ul>
+		<li>
+			<span>P&aacute;gina {{ page }} de {{ totalPages() }} </span>
+			<span>Total registros: {{ count }}</span>
+		</li>
+		<li>
+			<nav aria-label="...">
+			  <ul class="pagination">
+			    <li  [ngClass]="{disabled: page === 1 || loading}">
+			    	<a href="#" (click)="onPrev(); false" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+			   	</li>
+			    <li [ngClass]="{active: pageNum === page}" *ngFor="let pageNum of getPages()" (click)="onPage(pageNum); false">
+			    	<a href="#" >{{ pageNum }}<span class="sr-only">(current)</span></a>
+			    </li>
+			    <li [ngClass]="{disabled: lastPage() || loading}">			    
+			    	<a href="#" (click)="onNext(); false" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+			   	</li>
+			   	<li class="disabled">
+			   		<span >Total registros: {{ count }}</span>
+			   	</li>
+			  </ul>
+			</nav>
+		</li>
+	</ul>
+</div>
