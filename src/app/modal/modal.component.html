@@ -1,0 +1,15 @@
+    <div class="modal" *ngIf="active">
+	    <div class="modal-header">
+	    	<h3>{{titulo}}</h3>
+	    </div>
+        <div class="modal-body">
+            <h1>A Custom Modal!</h1>
+            <p>
+                Home page text: <input type="text" class="from-control" [(ngModel)]="bodyText" />
+            </p>
+            
+        </div>
+        <div class="modal-footer">
+        	<button class="btn btn-default" (Click) ="close()">Close</button>
+        </div>
+    </div>

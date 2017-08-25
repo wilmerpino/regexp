@@ -17,7 +17,8 @@
 		<td>{{ cliente.razon_social }}</td>
 		<td>{{ cliente.telefono }}</td>
 		<td>{{ cliente.email }}</td>
-		<td><button class="btn btn-default">Open </button> </td>
+		<td><button class="btn btn-danger" (click)="delCliente(cliente.id); false;">Eliminar </button> </td>
+		<td><button class="btn btn-success" (click)="getCliente(cliente.id); false;">Editar </button> </td>
 	</tr>	
 	</tbody>
 </table>
@@ -31,15 +32,8 @@
   [perPage]="limit"
   [count]="total"></app-pagination>
 
-<!--<modal id="clientes-modal">
-    <div class="modal">
-        <div class="modal-body">
-            <h1>A Custom Modal!</h1>
-            <p>
-                Home page text: <input type="text" [(ngModel)]="bodyText" />
-            </p>
-            <button (click)="closeModal('clientes-modal');">Close</button>
-        </div>
-    </div>
-    <div class="modal-background"></div>
-</modal>-->
+<app-clientes-form
+  [cliente]="cliente"
+  (save)="saveClientes($event)">
+</app-clientes-form>
+

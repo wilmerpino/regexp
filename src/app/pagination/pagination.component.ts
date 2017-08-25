@@ -13,9 +13,6 @@ export class PaginationComponent{
   @Input() perPage: number; // how many items we want to show per page
   @Input() pagesToShow: number; // how many pages between next/prev
   @Input() loading: boolean; // check if content is being loaded
-  @Input() url_base: string; // url 
-  @Input() url_next: string; // 
-  @Input() url_prev: string; // 
   @Input() current_page: number; // 
   
   @Output() goPrev = new EventEmitter<boolean>();

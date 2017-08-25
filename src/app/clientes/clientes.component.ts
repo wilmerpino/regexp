@@ -1,12 +1,8 @@
 import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
-import {HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { PaginationComponent } from '../pagination/pagination.component'
-//import { ModalService } from '../modal/modal.services';
+import {PaginationComponent } from '../pagination/pagination.component';
+import { ClientesService } from './clientes.service';
+import { Cliente } from "./clientes.model";
 
-interface ClientesResponse {
-	  cliente: any;
-	  success: boolean;
-	}
 
 @Component({
   selector: 'app-clientes',
@@ -16,18 +12,21 @@ interface ClientesResponse {
 
 
 export class ClientesComponent implements OnInit {
-
+  cliente: Cliente = new Cliente;
 	clientes:any[];
+  data:any = [];
   page: number = 1;
   total: number = 0;
   limit:number = 10;
   loading:boolean = true;
   pagesToShow:number=10;
   url:string = 'http://local.api.regexp.com/clientes';
-  url_next:string;
-  url_prev:string;
-
-	constructor(private http: HttpClient/*, private modalService: ModalService*/){
+  url_next:string = "";
+  url_prev:string = "";
+  dataSend:any = [];
+  _id:number;
+  rif : string;
+	constructor(private clienteService: ClientesService){
 
 	}
 
@@ -36,26 +35,45 @@ export class ClientesComponent implements OnInit {
         this.getClientes(this.url);
     } 	
 
-    getClientes(url: string): void{ 
-      this.loading = true;
-      this.http.get(url)
-       .subscribe(
-        // Successful responses call the first callback.
-        data => {
-          this.clientes = data['data'];
-          this.total = data['total'];
-          this.url_next = data['next_page_url'];
-          this.url_prev = data['prev_page_url'];
-          this.url = data['path'];
-          console.log(this.url_prev);
-        },
-        // Errors will call this callback instead:
-        err => {
-            console.log('Something went wrong!');
-        })
-        // Read the result field from the JSON response.
-        this.loading = false;
+    getClientes(url?: string): void{ 
+      if(url == undefined){
+        url = 'http://local.api.regexp.com/clientes';
+      }
+        this.loading = true;
+
+        this.clienteService.get(url).subscribe( data => {
+              this.loading = false;
+              this.clientes = data['data'];
+              this.url_next = data['next_page_url'];
+              this.url_prev = data['prev_page_url'];
+              this.total = data['total'];
+        });
     }  
+
+    getCliente(id): void{      
+       this.loading = true;
+       this.clienteService.find(id).subscribe( 
+         data => {
+            this.loading = false;
+            this.cliente = data;
+        },
+         error => {
+             alert("Error inesperado");
+        });
+    }
+
+    delCliente(id): void{      
+       this.loading = true;
+       this.clienteService.delete(id).subscribe( 
+         data => {
+            this.loading = false;           
+            this.getClientes();
+            alert(data['message']);
+        },
+         error => {
+             alert("Error inesperado");
+        });
+    }
 
     goToPage(n){
       this.page = n;
@@ -72,11 +90,18 @@ export class ClientesComponent implements OnInit {
       this.getClientes(this.url_prev);
     }
 
-    /* openModal(id: string){
-        this.modalService.open(id);
+    saveClientes(cliente){
+      this.loading = true;
+      let message:string;
+         this.clienteService.save(cliente).subscribe( 
+           data => {
+              this.loading = false;
+              message = data['message'];
+              alert(message);
+              this.getClientes();
+          },
+           error => {
+               alert("Error inesperado");
+          });  
     }
-
-    closeModal(id: string){
-        this.modalService.close(id);
-    }*/
 }

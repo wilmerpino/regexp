@@ -2,10 +2,6 @@
 <div class="pagination" *ngIf="count > 0">
 	<ul>
 		<li>
-			<span>P&aacute;gina {{ page }} de {{ totalPages() }} </span>
-			<span>Total registros: {{ count }}</span>
-		</li>
-		<li>
 			<nav aria-label="...">
 			  <ul class="pagination">
 			    <li  [ngClass]="{disabled: page === 1 || loading}">

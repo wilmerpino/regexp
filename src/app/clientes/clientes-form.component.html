@@ -1,0 +1,63 @@
+<div class="form-horizontal col-lg-8 col-lg-offset-2">
+	<form (ngSubmit)="onSave(cliente)" #formClientes="ngForm" name="formClientes" id="formClientes" class="well">
+		<h3>Cliente {{cliente.id}} </h3>
+		<hr/>
+		<div class="form-group">
+			<input type="hidden" name="id" [(ngModel)]="cliente.id"/>
+			<label class="col-lg-2 control-label" for="rif"><span class="text-danger">*</span>RIF</label>
+			<div class="col-lg-4">
+				<input type="text" name="rif" class="form-control" [(ngModel)]="cliente.rif" maxlength="15"
+				id="rif" #rif="ngModel" required/>
+				<div [hidden]="rif.valid || rif.pristine"
+				     class="alert alert-danger">
+				  		Debe indicar el RIF
+				</div>
+			</div>
+			<label class="col-lg-2 control-label" for="razon_social"><span class="text-danger">*</span>Raz&oacute;n Social</label>
+			<div class="col-lg-4">
+				<input type="text" name="razon_social" class="form-control" [(ngModel)]="cliente.razon_social" required maxlength="50" #razon_social="ngModel" id="razon_social"/>
+				<div [hidden]="razon_social.valid || razon_social.pristine"
+				     class="alert alert-danger">
+				  		Debe indicar la Raz&oacute;n Social
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="direccion">Direcci&oacute;n</label>
+			<div class="col-lg-10">
+				<input type="text" name="direccion" class="form-control" [(ngModel)]="cliente.direccion" maxlength="100" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="telefono">Tel&eacute;fono</label>
+			<div class="col-lg-4">
+				<input type="text" name="telefono" class="form-control" [(ngModel)]="cliente.telefono"  maxlength="15" />
+			</div>
+			<label class="col-lg-2 control-label" for="fax">Fax</label>
+			<div class="col-lg-4">
+				<input type="text" name="fax" class="form-control" [(ngModel)]="cliente.fax" maxlength="50" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="email">E-Mail</label>
+			<div class="col-lg-4">
+				<input type="text" name="email" class="form-control" [(ngModel)]="cliente.email" maxlength="50" id="email" #email="ngModel" pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"/>
+				<div class="alert alert-danger"
+			         *ngIf="email.errors && (email.dirty || email.touched)">
+			      <p *ngIf="email.errors.pattern">Ingrese un correo v&aacute;lido</p>
+			    </div>
+			</div>
+			<label class="col-lg-2 control-label" for="logo">Logo</label>
+			<div class="col-lg-4">
+				<input type="file" name="fax" class="form-control" [(ngModel)]="cliente.logo"  maxlength="50" />
+			</div>
+		</div>
+		<div class="form-group">
+		<hr/>
+			<div style="text-align: right">
+				<button type="submit" class="btn btn-primary"  [disabled]="formClientes.invalid" name="guardar">Guardar</button>
+				<button class="btn btn-default" name="cancelar" (click)="onCancel(); false;">Cancelar</button>
+			</div>
+		</div>
+	</form>
+</div>

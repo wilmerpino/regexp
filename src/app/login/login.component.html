@@ -1,0 +1,20 @@
+
+<div class="col-lg-4 col-lg-offset-4">
+    <h3>Inicio de Sesi&oacute;n</h3>
+    <div class="well">
+    		<form (ngSubmit)="loginSubmit()" #loginForm="ngForm" class="form-horizontal">
+    			<div class="form-group">
+        			<div class="col-lg-10 col-lg-offset-1">
+            			<input class="form-control" [(ngModel)]="user.email" name="email" mdInput placeholder="Nombre de Usuario" value="" required>
+        			</div>
+        		</div>	
+     			<div class="form-group">
+        			<div class="col-lg-10 col-lg-offset-1">
+          				<input class="form-control" type="password" [(ngModel)]="user.password" name="password" mdInput placeholder="Contrase&ntilde;a" value="" required>
+        			</div>
+     			</div>   
+    		</form> 
+    		<button type="submit" class="btn btn-primary" (click)="loginSubmit()">Iniciar</button>
+    		<button type="button" class="btn btn-default" (click)="loginCancel()">Cancelar</button>
+    </div>
+</div>
