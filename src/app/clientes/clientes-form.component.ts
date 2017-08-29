@@ -1,6 +1,7 @@
 import {Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
 import {Cliente} from './clientes.model';
-
+import { ClientesService } from './clientes.service';
+import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-clientes-form',
@@ -9,33 +10,55 @@ import {Cliente} from './clientes.model';
 })
 
 export class ClientesFormComponent implements OnInit {
-  	
-
   	@Input() cliente:Cliente;
   	@Output() save = new EventEmitter<any>();
+    loading:boolean = true;
 
-
-	constructor(){}
+	constructor(private clienteService: ClientesService, public activeModal: NgbActiveModal){}
 
 	ngOnInit(){
 
 	}
 
-	onSave(cliente): void{
-		this.save.emit(cliente);
-	}
+  saveClientes(cliente){
+    this.loading = true;
+    let message:string;
+    if(cliente.id == 'undefined'){
+       this.clienteService.save(cliente).subscribe( 
+         data => {
+            this.loading = false;
+            message = data['message'];
+            this.close(message);
+        },
+         error => {
+             this.close("Error inesperado");
+        }); 
+      }
+      else{
+         this.clienteService.update(cliente).subscribe( 
+         data => {
+            this.loading = false;
+            message = data['message'];
+            this.close(data);
+        },
+         error => {
+             this.close("Error inesperado");
+        }); 
+      } 
+  }
 
-	onCancel(): void{
+	close(message): void{
 		this.cliente = {
     		id : null,
     		rif : '',
-        	razon_social : '',
-        	direccion : '',
-        	telefono : '',
-        	fax : '',
-        	email : '',
-        	logo :  ''
+      	razon_social : '',
+      	direccion : '',
+      	telefono : '',
+      	fax : '',
+      	email : '',
+      	logo :  ''
     	}
+      this.activeModal.close(message); 
 	}
 
 	

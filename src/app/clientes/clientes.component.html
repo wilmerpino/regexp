@@ -1,24 +1,24 @@
+ <ngb-alert  *ngIf="message" (close)="message = null" [type]="type" [dismissible]="true">{{ message }}</ngb-alert>
 <h1>{{ title }}</h1>
-<table class="table">
-	<thead>
+<table class="table table-hover table-sm table-responsive">
+	<thead class="thead-default">
 		<tr>
-			<td>Id</td>
-			<td>RIF</td>
-			<td>Nombre</td>
-			<td>Telefono</td>
-			<td>Correo</td>
-			<td>Acciones</td>
+			<th>Id</th>
+			<th>RIF</th>
+			<th>Nombre</th>
+			<th>Telefono</th>
+			<th>Correo</th>
+			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
 	<tr *ngFor = "let cliente of clientes">
-		<td>{{ cliente.id }}</td>
+		<th scope="row">{{ cliente.id }}</th>
 		<td>{{ cliente.rif }}</td>
 		<td>{{ cliente.razon_social }}</td>
 		<td>{{ cliente.telefono }}</td>
 		<td>{{ cliente.email }}</td>
-		<td><button class="btn btn-danger" (click)="delCliente(cliente.id); false;">Eliminar </button> </td>
-		<td><button class="btn btn-success" (click)="getCliente(cliente.id); false;">Editar </button> </td>
+		<td><button class="btn btn-danger" (click)="delCliente(cliente.id); false;" ngbPopover="You see, I show up on hover!" triggers="mouseenter:mouseleave" popoverTitle="Pop title">Eliminar </button>    <button class="btn btn-success" (click)="getCliente(cliente.id); false;">Editar </button> </td>
 	</tr>	
 	</tbody>
 </table>
@@ -31,9 +31,3 @@
   [page]="page"
   [perPage]="limit"
   [count]="total"></app-pagination>
-
-<app-clientes-form
-  [cliente]="cliente"
-  (save)="saveClientes($event)">
-</app-clientes-form>
-

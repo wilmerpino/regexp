@@ -3,26 +3,30 @@ import {HttpClient, HttpErrorResponse , HttpHeaders} from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Cliente } from "./clientes.model";
+import { userLogin }    from '../login/login.model';
+import { LoginService }    from '../login/login.service';
 
 @Injectable()
 export class ClientesService{
 	private cliente:Cliente = new Cliente();
+	private user:userLogin;
+	private token:string;	
+	private url:string = "http://local.api.regexp.com/clientes";
 
-	constructor(private http: HttpClient){
-
+	constructor(private http: HttpClient, private session: LoginService){
+		this.token = this.session.getSession().token;
 	}
 
 	get(url:string): Observable<Cliente[]> {
-	  return this.http.get(url).
-	  	map(res => { 
-        	console.log(res);
-        	return res;
-        })	
+		let t:string = (url.indexOf('?') == -1)? '?':'&';
+	  	return this.http.get(url+t+'token='+this.token).
+	  		map(res => { 
+        		return res;
+        });	
 	}
 
 	find(id: number){
-		let url: string = "http://local.api.regexp.com/clientes/"+id; 
-
+		let url: string = this.url+"/"+id+'/edit?token='+this.token; 
 		return this.http.get(url).
 		  	map(res => { 
 	        	let data = res['data'];
@@ -41,26 +45,28 @@ export class ClientesService{
 	        })
 	}
 
-/*http
-  .post('/api/items/add', body, {
-    headers: new HttpHeaders().set('Authorization', 'my-auth-token'),
-  })
-  .subscribe();*/
-
 	save(cliente): Observable<any> {	
-		let url: string = "http://local.api.regexp.com/clientes"; 
+		let url: string = this.url+"?token="+this.token; 
 		let body = Object.assign({}, cliente)
 
 		return this.http.post(url, body).
 	  	map(res => { 
-        	console.log(res);
+        	return res;
+        })
+	}
+
+	update(cliente): Observable<any> {	
+		let url: string = this.url+"/"+cliente.id+"?token="+this.token; 
+		let body = Object.assign({}, cliente)
+
+		return this.http.put(url, body).
+	  	map(res => { 
         	return res;
         })
 	}
 
 	delete(id: number){
-		let url: string = "http://local.api.regexp.com/clientes/"+id; 
-//, {headers: new HttpHeaders().set('Authorization', 'my-auth-token')}
+		let url: string = this.url+"/"+id+'?token='+this.token; 
 		return this.http.delete(url).
 		  	map(res => { 
 	        	return res;

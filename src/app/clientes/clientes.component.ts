@@ -2,7 +2,10 @@ import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
 import {PaginationComponent } from '../pagination/pagination.component';
 import { ClientesService } from './clientes.service';
 import { Cliente } from "./clientes.model";
-
+import {NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { ClientesFormComponent} from './clientes-form.component';
+import {Subject} from 'rxjs/Subject';
+import {debounceTime} from 'rxjs/operator/debounceTime';
 
 @Component({
   selector: 'app-clientes',
@@ -12,27 +15,31 @@ import { Cliente } from "./clientes.model";
 
 
 export class ClientesComponent implements OnInit {
-  cliente: Cliente = new Cliente;
-	clientes:any[];
-  data:any = [];
-  page: number = 1;
-  total: number = 0;
-  limit:number = 10;
-  loading:boolean = true;
-  pagesToShow:number=10;
-  url:string = 'http://local.api.regexp.com/clientes';
-  url_next:string = "";
-  url_prev:string = "";
-  dataSend:any = [];
-  _id:number;
-  rif : string;
-	constructor(private clienteService: ClientesService){
+	private clientes:any[];
+  private page: number = 1;
+  private total: number = 0;
+  private limit:number = 10;
+  private loading:boolean = true;
+  private pagesToShow:number=10;
+  private url:string = 'http://local.api.regexp.com/clientes';
+  private url_next:string = "";
+  private url_prev:string = "";
+  private rif : string;
+
+  private _subject = new Subject<string>();
+  private message:string;
+  private type:string = 'danger';
+  private staticAlertClosed:boolean;
+
+	constructor(private clienteService: ClientesService, private modalService: NgbModal){
 
 	}
 
 
   	ngOnInit() {
-        this.getClientes(this.url);
+      this._subject.subscribe((message) => this.message = message, (type) => this.type = type);
+      debounceTime.call(this._subject, 5000).subscribe(() => this.message = null, () => this.type = 'success');
+      this.getClientes(this.url);
     } 	
 
     getClientes(url?: string): void{ 
@@ -55,10 +62,11 @@ export class ClientesComponent implements OnInit {
        this.clienteService.find(id).subscribe( 
          data => {
             this.loading = false;
-            this.cliente = data;
+            this.openModal(data);
         },
          error => {
-             alert("Error inesperado");
+            this.type = 'danger';
+             this._subject.next("Error inesperado");
         });
     }
 
@@ -68,10 +76,31 @@ export class ClientesComponent implements OnInit {
          data => {
             this.loading = false;           
             this.getClientes();
-            alert(data['message']);
+            this.type = 'success';
+            this._subject.next(data['message']);
         },
          error => {
-             alert("Error inesperado");
+             this.type = 'danger';
+             this._subject.next("Error inesperado");
+        });
+    }
+
+
+    openModal(cliente: Cliente) {
+        let options: NgbModalOptions = {
+          keyboard : false,
+          size: 'lg',
+        }
+        
+        const modalRef = this.modalService.open(ClientesFormComponent, options);
+        modalRef.componentInstance.cliente = cliente;   
+         modalRef.result.then((result) => {
+            this.getClientes();
+            this.type = 'success';
+            this._subject.next(result['message']);
+        }, (reason) => {
+          this.type = 'success';
+          this._subject.next("Error inesperado");
         });
     }
 
@@ -88,20 +117,5 @@ export class ClientesComponent implements OnInit {
     onPrev(): void {
       this.page--;
       this.getClientes(this.url_prev);
-    }
-
-    saveClientes(cliente){
-      this.loading = true;
-      let message:string;
-         this.clienteService.save(cliente).subscribe( 
-           data => {
-              this.loading = false;
-              message = data['message'];
-              alert(message);
-              this.getClientes();
-          },
-           error => {
-               alert("Error inesperado");
-          });  
     }
 }

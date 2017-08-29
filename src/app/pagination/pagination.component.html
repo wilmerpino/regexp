@@ -1,23 +1,24 @@
 <!-- pagination.component.html -->
-<div class="pagination" *ngIf="count > 0">
-	<ul>
-		<li>
-			<nav aria-label="...">
-			  <ul class="pagination">
-			    <li  [ngClass]="{disabled: page === 1 || loading}">
-			    	<a href="#" (click)="onPrev(); false" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-			   	</li>
-			    <li [ngClass]="{active: pageNum === page}" *ngFor="let pageNum of getPages()" (click)="onPage(pageNum); false">
-			    	<a href="#" >{{ pageNum }}<span class="sr-only">(current)</span></a>
-			    </li>
-			    <li [ngClass]="{disabled: lastPage() || loading}">			    
-			    	<a href="#" (click)="onNext(); false" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-			   	</li>
-			   	<li class="disabled">
-			   		<span >Total registros: {{ count }}</span>
-			   	</li>
-			  </ul>
-			</nav>
-		</li>
+<div *ngIf="count > 0">
+	<ul class="pagination">
+	    <li  [ngClass]="{disabled: page === 1 || loading}">
+	    	<a (click)="onPrev(); false" class="page-link" href="#" aria-label="Anterior">
+		        <span aria-hidden="true">&laquo;</span>
+		        <span class="sr-only">Previous</span>
+	        </a>
+	   	</li>
+	    <li [ngClass]="{active: pageNum === page}" *ngFor="let pageNum of getPages()" (click)="onPage(pageNum); false" class="page-item">
+	    	<a class="page-link" href="#">{{ pageNum }}<span class="sr-only">(current)</span></a>
+	    </li>
+	   	<li class="page-item" [ngClass]="{disabled: lastPage() || loading}">
+	      <a (click)="onNext(); false" class="page-link" href="#" aria-label="Siguiente">
+	        <span aria-hidden="true">&raquo;</span>
+	        <span class="sr-only">Next</span>
+	      </a>
+	    </li>
+	    <li class="disabled">
+	   		<span >Total registros: {{ count }}</span>
+	   	</li>
 	</ul>
+
 </div>

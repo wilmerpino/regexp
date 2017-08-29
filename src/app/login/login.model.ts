@@ -1,12 +1,14 @@
 export class userLogin {
-	public id: number;
-	public email: string;
-	public auth: string;
-	public name: string;
-	public token: string;
-	public remember: boolean;
-	public keepsession: boolean;
-
+	
+	public id: number = null;
+	public email: string = null;
+	public auth: string = null; 
+	public name: string = null;
+	public token: string = null;
+	public remember: boolean = false;
+	public keepsession: boolean  = false;
+	public logged: boolean = false;
+	
   constructor() {  }
 
 }

@@ -6,9 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { SidebarModule } from 'ng-sidebar';
 
 //import {AuthHttp, AuthConfig, tokenNotExpired, JwtHelper} from 'angular-jwt';
+import {AuthGuard} from './auth.guard';
 
 
 // Servicios de la App
@@ -34,6 +36,8 @@ import { ExpedientesComponent } from './expedientes/expedientes.component';
 import { PaginationComponent } from './pagination/pagination.component'
 import { ModalComponent } from './modal/modal.component'
 import { PanelesComponent } from './paneles/paneles.component';
+import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
     { 
@@ -44,11 +48,13 @@ const appRoutes: Routes = [
     { 
         path: 'clientes', 
         component: ClientesComponent, 
+        canActivate: [AuthGuard],
         data: { title: 'Clientes' }
     },
     { 
         path: 'expedientes-clientes',  
         component: ExpedientesClientesComponent,
+        canActivate: [AuthGuard],
         data: { title: 'Expedientes por Cliente' }
     },
      { 
@@ -59,25 +65,30 @@ const appRoutes: Routes = [
     { 
         path: 'instituciones', 
         component: InstitucionesComponent, 
+        canActivate: [AuthGuard],
         data: { title: 'Instituciones' }
     },
     { 
         path: 'expedientes', 
         component: ExpedientesComponent, 
+        canActivate: [AuthGuard],
         data: { title: 'Expedientes' }
     },
     { 
         path: 'seguimientos', 
         component: SeguimientosComponent, 
+        canActivate: [AuthGuard],
         data: { title: 'Seguimiento de Expedientes' }
     },
     { 
         path: 'usuarios', 
         component: UsuariosComponent, 
+        canActivate: [AuthGuard],
         data: { title: 'Gest&oacute;n de Usuarios' }
     },
     { 
         path: 'reportes', 
+        canActivate: [AuthGuard],
         component: ReportesComponent, 
         data: { title: 'Reportes' }
     },
@@ -108,14 +119,17 @@ const appRoutes: Routes = [
         ExpedientesComponent,
         PaginationComponent,
         ModalComponent,
-        PanelesComponent
+        PanelesComponent,
+        MenuLateralComponent,
+        HomeComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ToastModule.forRoot(),
+    NgbModule.forRoot(),
+    SidebarModule.forRoot(),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
@@ -129,8 +143,12 @@ const appRoutes: Routes = [
       },
       LoginService,
       ClientesService,
-      PanelesService
+      PanelesService,
+      AuthGuard
   ],
+   entryComponents: [
+        ClientesFormComponent
+    ],
   bootstrap: [AppComponent]
 })
 

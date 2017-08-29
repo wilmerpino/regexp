@@ -4,7 +4,9 @@
 	right: 0;
 	bottom: 0;	
 	font-size: 1em;
-  	font-weight: normal;	
+  	font-weight: normal;
+  	width: 100%;	
+  	z-index: 990;
 }
 
 .footer-spacer {

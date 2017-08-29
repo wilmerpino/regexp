@@ -1,0 +1,39 @@
+    <div class="justify-content-end">
+      <button class="demo-control" (click)="_toggleOpened()">Close sidebar</button>
+    </div>
+<ng-sidebar #sidebar 
+       [(opened)]="_opened"
+        [keyClose]="_keyClose"
+        [dock]="_dock"
+        [dockedSize]="'50px'"
+        [autoCollapseHeight]="_autoCollapseHeight"
+        [autoCollapseWidth]="_autoCollapseWidth"
+        [closeOnClickOutside]="_closeOnClickOutside"
+        [closeOnClickBackdrop]="_closeOnClickBackdrop"
+        [showBackdrop]="_showBackdrop"
+        [animate]="_animate"
+        [trapFocus]="_trapFocus"
+        [autoFocus]="_autoFocus"
+        [sidebarClass]="'demo-sidebar'"
+        [ariaLabel]="'My sidebar'">
+
+    <hr/>
+   <div style="background: blue;">
+      <div class="card-body">
+          <ul class="nav nav-pills flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#" routerLink="/clientes" (click)="sidebar.close()" routerLinkActive="active">Clientesxxxxxxxxxxxxxxxxxxxssssssssssssssssssssssssssssssssss</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" routerLink="/instituciones" (click)="sidebar.close()" routerLinkActive="active" >Instituciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" routerLink="/expedientes" (click)="sidebar.close()" routerLinkActive="active">Expedientes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" routerLink="/seguimientos" (click)="sidebar.close()"  routerLinkActive="active">Seguimiento</a>
+              </li>
+            </ul>
+      </div>
+  </div>
+</ng-sidebar> 
