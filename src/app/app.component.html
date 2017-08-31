@@ -1,14 +1,16 @@
 <ng-sidebar-container>
 	<app-menu-lateral></app-menu-lateral>
 	<div ng-sidebar-content>
-		<header>
-	 		<app-header></app-header>
-	 	</header>	
-		<section>
-	        <router-outlet class="container app-content"></router-outlet>
-	    </section>
-	    <footer> 
-	    	<app-footer></app-footer>
-	    </footer>     
+		<div style="height: 100%; position: relative;">
+			<header>
+		 		<app-header></app-header>
+		 	</header>	
+			<section>
+		        <router-outlet class="container app-content"></router-outlet>
+		    </section>
+		    <footer> 
+		    	<app-footer></app-footer>
+		    </footer>     
 		</div>
+	</div>	
 </ng-sidebar-container>

@@ -59,7 +59,7 @@ export class ClientesComponent implements OnInit {
 
     getCliente(id): void{      
        this.loading = true;
-       this.clienteService.find(id).subscribe( 
+       this.clienteService.edit(id).subscribe( 
          data => {
             this.loading = false;
             this.openModal(data);

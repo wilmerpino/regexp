@@ -11,6 +11,7 @@ class Expedientes extends Model
         'id_cliente', 
         'num_expediente', 
         'id_institucion', 
+        'sala',
         'nombre_causa', 
         'descripcion', 
         'fecha_expediente'

@@ -19,6 +19,6 @@ class Clientes extends Model
     
      public function expediente()
     {
-        return $this->hasMany('App\Clientes', 'id');
+        return $this->hasMany('App\Expedientes', 'id_cliente');
     } 
 }

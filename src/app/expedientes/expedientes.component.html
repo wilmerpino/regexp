@@ -1,3 +1,87 @@
-<p>
-  expedientes works!
-</p>
+<div class="row">
+	<div class="col-lg-3">
+		<div class="input-group">
+	      <input type="text" class="form-control" placeholder="Buscar cliente..." aria-label="Buscar cliente..."  [(ngModel)]="sCliente" (keyup)="searchCliente($event)">
+	    </div>
+		<div class="list-group"  id="list-tab" role="tablist">
+			  <a href="#" class="list-group-item list-group-item-action " role="tab" *ngFor = "let cliente of clientes" (click)="cargarExpedientes(cliente.id); false;" id="list-{{cliente.id}}">
+			    <div class="d-flex w-100 justify-content-between">
+			      <h6 class="mb-1">{{ cliente.razon_social }}</h6>	
+			      <span class="badge badge-dark">{{ cliente.cant}}</span>		      
+			    </div>
+			    <p class="mb-1">{{ cliente.direccion }}</p>
+			    <small>RIF: {{ cliente.rif }}</small>
+			  </a>
+		</div>	  
+	</div>
+	<div class="col-lg-9">	
+	<div class="container">
+          <button class="btn btn-default" (click)=showConfirm()>Show confirm</button>
+        </div>	
+		<p>
+		  <ngb-alert [dismissible]="false" *ngIf="expedientes === undefined">
+		    <strong>Advertencia!</strong> No hay un cliente seleccionado o el cliente no tiene expedientes abiertos.
+		  </ngb-alert>
+		   <ngb-alert  *ngIf="message" (close)="message = null" [type]="type" [dismissible]="true">{{ message }}</ngb-alert>
+		</p>
+		<a href="#" id="home"></a>
+		<ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+		  <ngb-panel *ngFor = "let expediente of expedientes">
+		    <ng-template ngbPanelTitle>
+			    {{ expediente.nombre_causa }} <span class="badge badge-success" *ngIf="expediente.status == 'Nuevo' || expediente.status == 'Introducida'">{{ expediente.status }}</span>
+						<span class="badge badge-danger" *ngIf="expediente.status == 'Sentencia'">{{ expediente.status }}</span>
+						<span class="badge badge-warning" *ngIf="expediente.status == 'Decisión'">{{ expediente.status }}</span>			      		
+		    </ng-template>
+		    <ng-template ngbPanelContent>
+		      <div class="row">
+		      		<label class="col-lg-3 h6">Nombre de la Causa:</label>
+		      		<label class="col-lg-5">{{ expediente.nombre_causa }}</label>
+		     		<label class="col-lg-2 h6">Fecha:</label>
+		      		<label class="col-lg-2">{{ expediente.fecha_expediente | date}}</label>
+		      </div>
+		      <div class="row">
+		      		<label class="col-lg-2 h6">Descripci&oacute;n:</label>
+		      		<label class="col-lg-10">{{ expediente.descripcion }}</label>
+		      </div>
+		      <div class="row">
+		      		<label class="col-lg-2 h6">Cliente:</label>
+		      		<label class="col-lg-4">{{ expediente.cliente.razon_social }}</label>
+		      		<label class="col-lg-2 h6">Instituci&oacute;n:</label>
+		      		<label class="col-lg-4">{{ expediente.institucion.nombre }}</label>
+		      </div>
+		      <div class="row">
+		      		<label class="col-lg-2 h6">Materia:</label>
+		      		<label class="col-lg-4">{{ expediente.institucion.materia }}</label>
+		      		<label class="col-lg-2 h6">Sala:</label>
+		      		<label class="col-lg-4">{{ expediente.sala }}</label>		      		
+		      </div>
+		      <div class="row">
+		      		<label class="col-lg-2 h6">Ciudad:</label>
+		      		<label class="col-lg-4">{{ expediente.institucion.ciudad }}</label>
+		      		<label class="col-lg-2 h6">Estado:</label>
+		      		<label class="col-lg-4">{{ expediente.status }}</label>
+		      </div>
+		      <div class="row">
+		      		<hr>
+		      		<div class="col-lg-auto align-content-lg-end">
+			      		<button type="button" class="btn btn-danger" (click)="borrarExpediente(expediente.id, expediente.id_cliente)">Eliminar</button>
+						<button type="button" class="btn btn-info" (click)="editarExpediente(expediente.id)">Editar</button>
+					</div>
+		      </div>
+		    </ng-template>
+		  </ngb-panel>		  
+		</ngb-accordion>
+	</div>
+</div>
+
+<ng-sidebar-container>
+  	<!-- A sidebar -->
+  	<ng-sidebar [(opened)]="modeEdit" [position]="right">
+    	<p>Sidebar contents</p>
+  	</ng-sidebar>
+
+  	<!-- Page content -->
+  	<div ng-sidebar-content>
+    	<button (click)="_toggleSidebar()">Toggle sidebar</button>
+  	</div>
+</ng-sidebar-container>

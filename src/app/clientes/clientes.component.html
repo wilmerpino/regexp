@@ -18,7 +18,7 @@
 		<td>{{ cliente.razon_social }}</td>
 		<td>{{ cliente.telefono }}</td>
 		<td>{{ cliente.email }}</td>
-		<td><button class="btn btn-danger" (click)="delCliente(cliente.id); false;" ngbPopover="You see, I show up on hover!" triggers="mouseenter:mouseleave" popoverTitle="Pop title">Eliminar </button>    <button class="btn btn-success" (click)="getCliente(cliente.id); false;">Editar </button> </td>
+		<td><button class="btn btn-danger" (click)="delCliente(cliente.id); false;" ngbPopover="Eliminar Cliente" triggers="mouseenter:mouseleave" popoverTitle="Pop title">Eliminar </button>    <button class="btn btn-success" (click)="getCliente(cliente.id); false;">Editar </button> </td>
 	</tr>	
 	</tbody>
 </table>

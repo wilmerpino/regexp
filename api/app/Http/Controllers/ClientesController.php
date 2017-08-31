@@ -112,4 +112,9 @@ class ClientesController extends Controller {     //
         //}  
     }
 
+    public function find($search){
+        $cliente = Clientes::where('razon_social', 'like', '%' . $search . '%')->get();
+        return response()->json(["data" => $cliente, "success" => "true"]);
+    }
+
 }

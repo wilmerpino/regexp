@@ -5,20 +5,6 @@
 	bottom: 0;	
 	font-size: 1em;
   	font-weight: normal;
-  	width: 100%;	
+	width: 100%;	
   	z-index: 990;
-}
-
-.footer-spacer {
-  flex: 1 1 auto;
-}
-
-ul > li{
-	list-style: none outside none;
-	display: inline;
-  	vertical-align: middle;
-}
-
-a{
-	text-decoration: none;
 }

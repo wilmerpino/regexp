@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Expedientes;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
+use App\Expedientes;
 
 class ExpedientesController extends Controller
 {
@@ -14,7 +17,8 @@ class ExpedientesController extends Controller
      */
     public function index()
     {
-        //
+        $expedientes = Expedientes::orderBy('fecha_expediente', 'ASC')->paginate(10);
+        return response()->json($expedientes);
     }
 
     /**
@@ -80,7 +84,9 @@ class ExpedientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $expediente = Expedientes::destroy($id);
+
+        return response()->json(["message" => "Expediente eliminado satisfactoriamente", "success" => "true", "data" => $expediente], 200);
     }
 
 }

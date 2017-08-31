@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy, CommonModule  } from '@angular/common';
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,13 +17,13 @@ import {AuthGuard} from './auth.guard';
 // Servicios de la App
 import { LoginService } from './login/login.service';
 import { ClientesService } from './clientes/clientes.service';
+import { ExpedientesService } from './expedientes/expedientes.service';
 import { PanelesService } from './paneles/paneles.service';
 
 //Componentes de la app
 import { AppComponent } from './app.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ClientesFormComponent } from './clientes/clientes-form.component';
-import { ExpedientesClientesComponent } from './expedientes-clientes/expedientes-clientes.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
@@ -38,6 +39,7 @@ import { ModalComponent } from './modal/modal.component'
 import { PanelesComponent } from './paneles/paneles.component';
 import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
 import { HomeComponent } from './home/home.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 const appRoutes: Routes = [
     { 
@@ -50,12 +52,6 @@ const appRoutes: Routes = [
         component: ClientesComponent, 
         canActivate: [AuthGuard],
         data: { title: 'Clientes' }
-    },
-    { 
-        path: 'expedientes-clientes',  
-        component: ExpedientesClientesComponent,
-        canActivate: [AuthGuard],
-        data: { title: 'Expedientes por Cliente' }
     },
      { 
         path: 'login', 
@@ -107,7 +103,6 @@ const appRoutes: Routes = [
         AppComponent,
         ClientesComponent,
         ClientesFormComponent,
-        ExpedientesClientesComponent,
         HeaderComponent,
         FooterComponent,
         LeftMenuComponent,
@@ -121,11 +116,14 @@ const appRoutes: Routes = [
         ModalComponent,
         PanelesComponent,
         MenuLateralComponent,
-        HomeComponent
+        HomeComponent,
+        ConfirmComponent
   ],
   imports: [
     FormsModule,
+    CommonModule,
     BrowserModule,
+    BootstrapModalModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NgbModule.forRoot(),
@@ -143,11 +141,14 @@ const appRoutes: Routes = [
       },
       LoginService,
       ClientesService,
+      ExpedientesService,
       PanelesService,
+      ConfirmComponent,
       AuthGuard
   ],
    entryComponents: [
-        ClientesFormComponent
+        ClientesFormComponent,
+        ConfirmComponent
     ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { userLogin }    from './login.model';
 import { LoginService }    from './login.service';
@@ -21,12 +20,12 @@ export class LoginComponent implements OnInit {
      'password' : 'europa'
    }
 
-  	constructor(private http: HttpClient, private router: Router, private loginServ: LoginService) {
+  	constructor(private router: Router, private loginServ: LoginService) {
   		this.submitted = false;
    	}
 
 	ngOnInit() {
-		console.log(this.user);
+
   	}
 
  	onSubmit() { 
@@ -35,21 +34,21 @@ export class LoginComponent implements OnInit {
 
 
   	loginSubmit(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-        this.loginServ.Login(this.user.email, this.user.password)
-            .subscribe(
-                result =>  
-                  {
-                      //console.log(result);
-                      if(this.loginServ.isLogged()){
-                          this.router.navigate(['/']);
-                      }                     
-                  },
-                  err => {
-                      console.log(err);
-                      this.type = "danger";
-                      this.message = "Nombre de usuario o contraseña no valida";
-                  }
-             )
+      this.loginServ.Login(this.user.email, this.user.password)
+        .subscribe(
+            result =>  
+            {
+                //console.log(result);
+                if(this.loginServ.isLogged()){
+                    this.router.navigate(['/']);
+                }                     
+            },
+            err => {
+                console.log(err);
+                this.type = "danger";
+                this.message = "Nombre de usuario o contraseña no valida";
+            }
+         )
 	}
 
 	loginCancel(){

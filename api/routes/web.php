@@ -23,11 +23,12 @@ Route::post('login', 'ApiAuthController@UserAuth')->middleware('cors');
 
 Route::group(['middleware' => 'cors', 'middleware' => 'jwt.auth'], function(){
 	Route::get('user', 'ApiAuthController@getAuthUser');
+	Route::get('clientes/{search}/find', 'ClientesController@find');
 	Route::resource('clientes', 'ClientesController');
 	Route::resource('expedientes', 'ExpedientesController');
 	Route::resource('dependencias', 'DependenciasController');
 	Route::resource('expedientes-instituciones', 'ExpedientesInstitucionController', ['only' => ['index']]);
-	Route::resource('expedientes-clientes', 'ExpedientesClientesController', ['only' => ['index']]);
+	Route::resource('expedientes-clientes', 'ExpedientesClientesController', ['only' => ['index', 'show']]);
 
 });
 
